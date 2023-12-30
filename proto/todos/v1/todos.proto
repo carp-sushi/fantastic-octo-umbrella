@@ -1,0 +1,116 @@
+// Copyright 2024 carp-cobain
+//
+syntax = "proto3";
+
+package todos.v1;
+
+// The todos service definition
+service TodosService {
+  // Create a new story
+  rpc CreateStory(CreateStoryRequest) returns (CreateStoryResponse);
+  // Get stories by owner
+  rpc GetStories(GetStoriesRequest) returns (GetStoriesResponse);
+  // Add a task to a story
+  rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
+  // Get tasks for a story
+  rpc GetTasks(GetTasksRequest) returns (GetTasksResponse);
+  // Complete a task
+  rpc CompleteTask(CompleteTaskRequest) returns (CompleteTaskResponse);
+  // Delete a story and all its tasks
+  rpc DeleteStory(DeleteStoryRequest) returns (DeleteStoryResponse);
+  // Delete a single task
+  rpc DeleteTask(DeleteTaskRequest) returns (DeleteTaskResponse);
+}
+
+// The story type
+message Story {
+  // The story unique id
+  string story_id = 1;
+  // The story name
+  string name = 2;
+  // The owner
+  string owner = 3;
+}
+
+// The story task type
+message Task {
+  // The task unique id
+  string task_id = 1;
+  // The parent story
+  string story_id = 2;
+  // The task name
+  string name = 3;
+  // The task status
+  bool complete = 4;
+}
+
+// Request for creating a new story.
+message CreateStoryRequest {
+  // Give the new story a name.
+  string name = 1;
+  // Indicate the owner of the story.
+  string owner = 2;
+}
+
+// Response from creating a new story.
+message CreateStoryResponse {
+  Story story = 1;
+}
+
+// Request to get owner stories
+message GetStoriesRequest {
+  string owner = 1;
+}
+
+// Response from querying owner stories
+message GetStoriesResponse {
+  // The sequence of stories
+  repeated Story stories = 2;
+}
+
+// Request for adding a task to a story
+message CreateTaskRequest {
+  // The parent story for this task
+  string story_id = 1;
+  // The task name
+  string name = 2;
+}
+
+// Response from adding a task to a story
+message CreateTaskResponse {
+  Task task = 1;
+}
+
+// Request to get tasks for a story
+message GetTasksRequest {
+  string story_id = 1;
+}
+
+// Response from getting story tasks
+message GetTasksResponse {
+  repeated Task tasks = 1;
+}
+
+// Request for marking a task as complete
+message CompleteTaskRequest {
+  string task_id = 1;
+}
+
+// Response from marking a task as complete
+message CompleteTaskResponse {}
+
+// Request for deleting a story.
+message DeleteStoryRequest {
+  string story_id = 1;
+}
+
+// Response from deleting a story.
+message DeleteStoryResponse {}
+
+// Request for deleting a task.
+message DeleteTaskRequest {
+  string task_id = 1;
+}
+
+// Response from deleting a task.
+message DeleteTaskResponse {}

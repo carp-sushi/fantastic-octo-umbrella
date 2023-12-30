@@ -1,0 +1,33 @@
+[package]
+version = "0.1.0"
+name = "todos"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4"
+env_logger = "0.10.1"
+futures = "0.3.29"
+futures-util = "0.3.29"
+log = "0.4.20"
+percent-encoding = "2.3.1"
+prost = "0.12.1"
+sqlx = { version = "0.7", features = [
+    "runtime-tokio-rustls",
+    "postgres",
+    "macros",
+    "uuid",
+    "chrono",
+    "migrate",
+] }
+thiserror = "1.0.50"
+tokio = { version = "1.32.0", features = ["macros", "rt-multi-thread"] }
+tonic = "0.10.2"
+tonic-health = "0.10.2"
+uuid = { version = "1", features = ["v4"] }
+
+[build-dependencies]
+tonic-build = "0.10.2"
+
+[dev-dependencies]
+testcontainers = "0.15"
+testcontainers-modules = { version = "0.2", features = ["postgres"] }
